@@ -7,13 +7,14 @@ final class MoviesTableViewCell: UITableViewCell {
     // MARK: - Static Property
 
     static let identifier = "CustomTableViewCell"
+    let staticImageAddress = "https://image.tmdb.org/t/p/w500"
 
     // MARK: - Public Properties
 
-    var filmsOverviewLabelText = ""
-    var filmsTitleLabelText = ""
-    var filmsPosterImageViewData = Data()
-    var voteLabelText = ""
+    private var filmsOverviewLabelText = ""
+    private var filmsTitleLabelText = ""
+    private var filmsPosterImageViewData = Data()
+    private var voteLabelText = ""
 
     // MARK: - Private Propertyes
 
@@ -32,6 +33,21 @@ final class MoviesTableViewCell: UITableViewCell {
     }
 
     // MARK: - Private Methods
+
+    func configurateCell(films: Category, for indexPath: IndexPath) -> UITableViewCell {
+        filmsOverviewLabelText = films.results[indexPath.row].overview
+        filmsTitleLabelText = films.results[indexPath.row].title
+        voteLabelText = String(films.results[indexPath.row].voteAverage)
+
+        let image = films.results[indexPath.row].posterPath ?? ""
+
+        guard let urlImage = URL(string: staticImageAddress + image),
+              let dataImage = try? Data(contentsOf: urlImage)
+        else { return UITableViewCell() }
+        filmsPosterImageViewData = dataImage
+
+        return self
+    }
 
     private func setupCellView() {
         createBackVoteLabelView()

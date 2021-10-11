@@ -51,30 +51,6 @@ final class MainTableViewController: UITableViewController {
         }.resume()
     }
 
-    private func configurateCell(cell: MoviesTableViewCell, for indexPath: IndexPath) {
-        cell.selectionStyle = .none
-        let filmOverviewText = category?.results[indexPath.row].overview
-        let filmLabelText = category?.results[indexPath.row].title
-        guard let voteNumber = category?.results[indexPath.row].voteAverage else { return }
-
-        guard let image = category?.results[indexPath.row].posterPath else { return }
-        let staticImageAddress = "https://image.tmdb.org/t/p/w500"
-
-        DispatchQueue.global().async {
-            guard let urlImage = URL(string: staticImageAddress + image),
-                  let dataImage = try? Data(contentsOf: urlImage)
-            else { return }
-
-            DispatchQueue.main.async {
-                cell.filmsPosterImageViewData = dataImage
-                self.tableView.reloadData()
-            }
-        }
-        cell.voteLabelText = String(voteNumber)
-        cell.filmsTitleLabelText = filmLabelText ?? ""
-        cell.filmsOverviewLabelText = filmOverviewText ?? ""
-    }
-
     // MARK: - UITableViewDataSource
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -88,14 +64,9 @@ final class MainTableViewController: UITableViewController {
             for: indexPath
         ) as? MoviesTableViewCell else { return UITableViewCell() }
 
-        configurateCell(cell: cell, for: indexPath)
+        guard let films = category else { return UITableViewCell() }
 
-//        DispatchQueue.global().async {
-//            DispatchQueue.main.async {
-//                tableView.reloadData()
-//            }
-//        }
-        return cell
+        return cell.configurateCell(films: films, for: indexPath)
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
