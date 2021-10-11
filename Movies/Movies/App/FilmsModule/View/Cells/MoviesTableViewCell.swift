@@ -7,23 +7,19 @@ final class MoviesTableViewCell: UITableViewCell {
     // MARK: - Static Property
 
     static let identifier = "CustomTableViewCell"
-    let staticImageAddress = "https://image.tmdb.org/t/p/w500"
 
-    // MARK: - Public Properties
+    // MARK: - Private Properties
 
-    private var filmsOverviewLabelText = ""
-    private var filmsTitleLabelText = ""
-    private var filmsPosterImageViewData = Data()
-    private var voteLabelText = ""
-
-    // MARK: - Private Propertyes
-
+    private let staticImageAddress = "https://image.tmdb.org/t/p/w500"
     private let filmsOverviewLabel = UITextView()
     private let filmsTitleLabel = UILabel()
     private let filmsPosterImageView = UIImageView()
     private let voteLabel = UILabel()
     private let backOverviewView = UIView()
     private let backVoteLabelView = UIView()
+
+    ///until create a network service
+    private let viewModel = FilmsViewModel()
 
     // MARK: - Set Selected
 
@@ -35,17 +31,15 @@ final class MoviesTableViewCell: UITableViewCell {
     // MARK: - Private Methods
 
     func configurateCell(films: Category, for indexPath: IndexPath) -> UITableViewCell {
-        filmsOverviewLabelText = films.results[indexPath.row].overview
-        filmsTitleLabelText = films.results[indexPath.row].title
-        voteLabelText = String(films.results[indexPath.row].voteAverage)
+        filmsOverviewLabel.text = films.results[indexPath.row].overview
+        filmsTitleLabel.text = films.results[indexPath.row].title
+        voteLabel.text = String(films.results[indexPath.row].voteAverage)
 
-        let image = films.results[indexPath.row].posterPath ?? ""
-
-        guard let urlImage = URL(string: staticImageAddress + image),
-              let dataImage = try? Data(contentsOf: urlImage)
-        else { return UITableViewCell() }
-        filmsPosterImageViewData = dataImage
-
+        viewModel.imageRequest(row: indexPath.row) { [weak self] poster in
+            DispatchQueue.main.async {
+                self?.filmsPosterImageView.image = poster
+            }
+        }
         return self
     }
 
@@ -76,7 +70,6 @@ final class MoviesTableViewCell: UITableViewCell {
     private func createVoteLabel() {
         voteLabel.font = UIFont.boldSystemFont(ofSize: 16)
         voteLabel.textColor = .white
-        voteLabel.text = voteLabelText
         voteLabel.adjustsFontSizeToFitWidth = true
         backVoteLabelView.addSubview(voteLabel)
     }
@@ -87,7 +80,6 @@ final class MoviesTableViewCell: UITableViewCell {
     }
 
     private func createOverviewLabelCell() {
-        filmsOverviewLabel.text = filmsOverviewLabelText
         filmsOverviewLabel.isScrollEnabled = false
         filmsOverviewLabel.font = UIFont.systemFont(ofSize: 14)
         filmsOverviewLabel.backgroundColor = .white
@@ -95,7 +87,6 @@ final class MoviesTableViewCell: UITableViewCell {
     }
 
     private func createTitleLabelCell() {
-        filmsTitleLabel.text = filmsTitleLabelText
         filmsTitleLabel.numberOfLines = 0
         filmsTitleLabel.textColor = .darkGray
         filmsTitleLabel.adjustsFontSizeToFitWidth = false
@@ -109,7 +100,6 @@ final class MoviesTableViewCell: UITableViewCell {
         if filmsPosterImageView.image == nil {
             filmsPosterImageView.image = UIImage(named: "poster")
         }
-        filmsPosterImageView.image = UIImage(data: filmsPosterImageViewData)
         contentView.addSubview(filmsPosterImageView)
     }
 

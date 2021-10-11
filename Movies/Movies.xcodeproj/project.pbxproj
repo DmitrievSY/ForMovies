@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8B3A455626B1CDC1006FF226 /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3A455526B1CDC1006FF226 /* MainTableViewController.swift */; };
+		8B3A455626B1CDC1006FF226 /* FilmsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3A455526B1CDC1006FF226 /* FilmsTableViewController.swift */; };
 		8B3A455C26B1FF14006FF226 /* FilmDescriptionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3A455B26B1FF14006FF226 /* FilmDescriptionTableViewController.swift */; };
 		8B3A455F26B20161006FF226 /* FilmViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3A455E26B20161006FF226 /* FilmViewCell.swift */; };
 		8B4E6F5C2714BE9600D4D04E /* FilmsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4E6F5B2714BE9600D4D04E /* FilmsViewModel.swift */; };
@@ -22,7 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8B3A455526B1CDC1006FF226 /* MainTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewController.swift; sourceTree = "<group>"; };
+		8B3A455526B1CDC1006FF226 /* FilmsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsTableViewController.swift; sourceTree = "<group>"; };
 		8B3A455B26B1FF14006FF226 /* FilmDescriptionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmDescriptionTableViewController.swift; sourceTree = "<group>"; };
 		8B3A455E26B20161006FF226 /* FilmViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmViewCell.swift; sourceTree = "<group>"; };
 		8B4E6F5B2714BE9600D4D04E /* FilmsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsViewModel.swift; sourceTree = "<group>"; };
@@ -105,7 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				8B4E6F562714AB9A00D4D04E /* Cells */,
-				8B3A455526B1CDC1006FF226 /* MainTableViewController.swift */,
+				8B3A455526B1CDC1006FF226 /* FilmsTableViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -296,7 +296,7 @@
 				8B61FC5426AF63BD00B9C4B1 /* Films.swift in Sources */,
 				8B63C89A26B344AF00F86B6D /* FilmParametrsTableViewCell.swift in Sources */,
 				8B4E6F5C2714BE9600D4D04E /* FilmsViewModel.swift in Sources */,
-				8B3A455626B1CDC1006FF226 /* MainTableViewController.swift in Sources */,
+				8B3A455626B1CDC1006FF226 /* FilmsTableViewController.swift in Sources */,
 				8B61FBDF26AF020600B9C4B1 /* AppDelegate.swift in Sources */,
 				8B61FBE126AF020600B9C4B1 /* SceneDelegate.swift in Sources */,
 				8B61FC4926AF566100B9C4B1 /* MoviesTableViewCell.swift in Sources */,
