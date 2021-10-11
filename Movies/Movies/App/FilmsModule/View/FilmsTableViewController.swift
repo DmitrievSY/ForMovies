@@ -30,7 +30,6 @@ final class FilmsTableViewController: UITableViewController {
         viewModel?.reloadTableData = { self.tableView.reloadData() }
         title = "Movies"
         tableView.separatorStyle = .none
-
         tableView.register(MoviesTableViewCell.self, forCellReuseIdentifier: MoviesTableViewCell.identifier)
     }
 
@@ -46,9 +45,7 @@ final class FilmsTableViewController: UITableViewController {
             withIdentifier: MoviesTableViewCell.identifier,
             for: indexPath
         ) as? MoviesTableViewCell else { return UITableViewCell() }
-
         guard let films = viewModel?.films else { return UITableViewCell() }
-
         return cell.configurateCell(films: films, for: indexPath)
     }
 

@@ -28,7 +28,7 @@ final class MoviesTableViewCell: UITableViewCell {
         setupCellView()
     }
 
-    // MARK: - Private Methods
+    // MARK: - Internal Methods
 
     func configurateCell(films: Category, for indexPath: IndexPath) -> UITableViewCell {
         filmsOverviewLabel.text = films.results[indexPath.row].overview
@@ -42,6 +42,8 @@ final class MoviesTableViewCell: UITableViewCell {
         }
         return self
     }
+
+    // MARK: - Private Methods
 
     private func setupCellView() {
         createBackVoteLabelView()
