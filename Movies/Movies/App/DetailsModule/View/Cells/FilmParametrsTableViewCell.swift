@@ -4,15 +4,15 @@
 import UIKit
 
 final class FilmParametrsTableViewCell: UITableViewCell {
+    enum LabelDescriptions: String {
+        case budget = "Бюджет:\n"
+        case originaleTitle = "Оригинальное название:\n"
+        case reliseDate = "Дата релиза:\n"
+    }
+
     // MARK: - Static Property
 
     static let identifier = "FilmParametrsTableViewCell"
-
-    // MARK: - Public Properties
-
-    private var budgetLabelText = ""
-    private var originalTitleLabelText = ""
-    private var reliseDataLabelText = ""
 
     // MARK: - Private Propertyes
 
@@ -41,9 +41,9 @@ final class FilmParametrsTableViewCell: UITableViewCell {
             let originalLabel = filmDescription.originalTitle,
             let reliseDate = filmDescription.releaseDate else { return UITableViewCell() }
 
-        budgetLabelText = "Бюджет:\n \(String(budgetInt))$"
-        originalTitleLabelText = "Оригинальное название:\n \(originalLabel)"
-        reliseDataLabelText = "Дата релиза:\n \(reliseDate)"
+        budgetLabel.text = String(LabelDescriptions.budget.rawValue + String(budgetInt) + "$")
+        originalTitleLabel.text = String(LabelDescriptions.originaleTitle.rawValue + originalLabel)
+        reliseDataLabel.text = String(LabelDescriptions.reliseDate.rawValue + reliseDate)
         return self
     }
 
@@ -53,7 +53,6 @@ final class FilmParametrsTableViewCell: UITableViewCell {
         originalTitleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         originalTitleLabel.numberOfLines = 0
         originalTitleLabel.textColor = .darkGray
-        originalTitleLabel.text = originalTitleLabelText
         contentView.addSubview(originalTitleLabel)
     }
 
@@ -61,7 +60,6 @@ final class FilmParametrsTableViewCell: UITableViewCell {
         budgetLabel.font = UIFont.boldSystemFont(ofSize: 18)
         budgetLabel.numberOfLines = 0
         budgetLabel.textColor = .darkGray
-        budgetLabel.text = budgetLabelText
         contentView.addSubview(budgetLabel)
     }
 
@@ -69,7 +67,6 @@ final class FilmParametrsTableViewCell: UITableViewCell {
         reliseDataLabel.font = UIFont.boldSystemFont(ofSize: 18)
         reliseDataLabel.numberOfLines = 0
         reliseDataLabel.textColor = .darkGray
-        reliseDataLabel.text = reliseDataLabelText
         contentView.addSubview(reliseDataLabel)
     }
 

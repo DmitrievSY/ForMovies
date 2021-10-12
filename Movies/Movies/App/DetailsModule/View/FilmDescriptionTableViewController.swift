@@ -6,7 +6,7 @@ import UIKit
 final class FilmDescriptionTableViewController: UITableViewController {
     // MARK: - Enum
 
-    enum DescriptionCells {
+    private enum DescriptionCells {
         case mainDescription
         case additionalDescription
     }
@@ -14,11 +14,9 @@ final class FilmDescriptionTableViewController: UITableViewController {
     // MARK: - Public Properties
 
     var viewModel: DetailsViewModelProtocol?
-    var filmNumber = Int()
 
     // MARK: - Private Property
 
-    // private var filmDescription: FilmDescription?
     private let descriptionCells: [DescriptionCells] = [.mainDescription, .additionalDescription]
 
     // MARK: - Life Cycle VC
@@ -29,7 +27,7 @@ final class FilmDescriptionTableViewController: UITableViewController {
         setConfigCell()
     }
 
-    // MARK: - Private Methods
+    // MARK: - Private Method
 
     private func setConfigCell() {
         viewModel?.reloadData = { self.tableView.reloadData() }

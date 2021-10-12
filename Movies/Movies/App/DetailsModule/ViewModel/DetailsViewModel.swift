@@ -9,36 +9,38 @@ protocol DetailsViewModelProtocol {
 }
 
 final class DetailsViewModel: DetailsViewModelProtocol {
+    // MARK: - Internal property
+
     var reloadData: (() -> ())?
     var filmDescription: FilmDescription?
+    let movieAPIService: MovieAPIServiceProtocol
+
+    // MARK: - Private property
+
     private let filmNumber: Int
+
+    // MARK: - Init
 
     init(filmNumber: Int) {
         self.filmNumber = filmNumber
-        parsingDescription()
+        movieAPIService = MovieAPIService()
+        setRequest()
     }
 
-    private func parsingDescription() {
-        guard let pageDescriptionURL =
-            URL(
-                string: "https://api.themoviedb.org/3/movie/\(filmNumber)?api_key=e318d66f1eef01b2c45127e1e13922a7&language=ru-RU"
-            )
-        else { return }
+    // MARK: - Private method
 
-        URLSession.shared.dataTask(with: pageDescriptionURL) { [weak self] data, _, _ in
-            guard let data = data else { return }
+    private func setRequest() {
+        movieAPIService.parsingDescription(filmNumber: filmNumber, completion: { [weak self] result in
+            switch result {
+            case let .failure(error):
+                print(error.localizedDescription)
+            case let .success(filmDescription):
+                self?.filmDescription = filmDescription
 
-            do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                self?.filmDescription = try decoder.decode(FilmDescription.self, from: data)
                 DispatchQueue.main.async {
                     self?.reloadData?()
                 }
-
-            } catch {
-                print("error")
             }
-        }.resume()
+        })
     }
 }

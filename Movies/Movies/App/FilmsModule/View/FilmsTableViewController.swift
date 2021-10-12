@@ -8,6 +8,8 @@ final class FilmsTableViewController: UITableViewController {
 
     private var viewModel: FilmsViewModelProtocol?
 
+    // MARK: - Init
+
     init(viewModel: FilmsViewModelProtocol) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
@@ -45,6 +47,7 @@ final class FilmsTableViewController: UITableViewController {
             withIdentifier: MoviesTableViewCell.identifier,
             for: indexPath
         ) as? MoviesTableViewCell else { return UITableViewCell() }
+        cell.selectionStyle = .none
         guard let films = viewModel?.films else { return UITableViewCell() }
         return cell.configurateCell(films: films, for: indexPath)
     }
@@ -58,7 +61,6 @@ final class FilmsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let nav = FilmDescriptionTableViewController()
         guard let choosenFilmNumber = viewModel?.films?.results[indexPath.row].id else { return }
-        nav.filmNumber = choosenFilmNumber
         nav.viewModel = DetailsViewModel(filmNumber: choosenFilmNumber)
         navigationController?.pushViewController(nav, animated: true)
     }
