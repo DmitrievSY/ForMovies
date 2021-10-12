@@ -27,7 +27,7 @@ final class FilmsTableViewController: UITableViewController {
     // MARK: - Private Methods
 
     private func setConfigCell() {
-        viewModel?.reloadTableData = { self.tableView.reloadData() }
+        viewModel?.reloadData = { self.tableView.reloadData() }
         title = "Movies"
         tableView.separatorStyle = .none
         tableView.register(MoviesTableViewCell.self, forCellReuseIdentifier: MoviesTableViewCell.identifier)

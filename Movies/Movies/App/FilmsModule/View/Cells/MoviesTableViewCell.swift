@@ -18,7 +18,7 @@ final class MoviesTableViewCell: UITableViewCell {
     private let backOverviewView = UIView()
     private let backVoteLabelView = UIView()
 
-    ///until create a network service
+    /// until create a network service
     private let viewModel = FilmsViewModel()
 
     // MARK: - Set Selected
@@ -35,9 +35,9 @@ final class MoviesTableViewCell: UITableViewCell {
         filmsTitleLabel.text = films.results[indexPath.row].title
         voteLabel.text = String(films.results[indexPath.row].voteAverage)
 
-        viewModel.imageRequest(row: indexPath.row) { [weak self] poster in
+        viewModel.imageRequest(row: indexPath.row) { [weak self] image in
             DispatchQueue.main.async {
-                self?.filmsPosterImageView.image = poster
+                self?.filmsPosterImageView.image = image
             }
         }
         return self

@@ -5,7 +5,7 @@ import UIKit
 
 protocol FilmsViewModelProtocol {
     var films: Category? { get set }
-    var reloadTableData: (() -> ())? { get set }
+    var reloadData: (() -> ())? { get set }
     func imageRequest(row: Int, completion: @escaping (UIImage) -> ())
 }
 
@@ -13,7 +13,7 @@ final class FilmsViewModel: FilmsViewModelProtocol {
     // MARK: - Internal Property
 
     var films: Category?
-    var reloadTableData: (() -> ())?
+    var reloadData: (() -> ())?
 
     // MARK: - Private enum
 
@@ -48,7 +48,7 @@ final class FilmsViewModel: FilmsViewModelProtocol {
 
                 self.films = films
                 DispatchQueue.main.async {
-                    self.reloadTableData?()
+                    self.reloadData?()
                 }
             } catch {
                 print(TextForURL.error, error)
