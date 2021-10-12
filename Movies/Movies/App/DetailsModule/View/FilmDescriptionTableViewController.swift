@@ -56,19 +56,9 @@ final class FilmDescriptionTableViewController: UITableViewController {
                 .dequeueReusableCell(withIdentifier: FilmViewCell.identifier, for: indexPath) as? FilmViewCell
             else { return UITableViewCell() }
             cell.selectionStyle = .none
-            cell.filmTitleText = viewModel?.filmDescription?.title ?? "error"
-            cell.descriptionTitleText = viewModel?.filmDescription?.overview ?? "error"
+            guard let filmDescription = viewModel?.filmDescription else { return UITableViewCell() }
+            return cell.configureCell(filmDescription: filmDescription)
 
-            guard let image = viewModel?.filmDescription?.posterPath else { return UITableViewCell() }
-            let staticImageAddress = "https://image.tmdb.org/t/p/w500"
-
-            guard let urlImage = URL(string: staticImageAddress + image)
-            else { return UITableViewCell() }
-            guard let dataImage = try? Data(contentsOf: urlImage) else { return UITableViewCell() }
-            DispatchQueue.main.async {
-                cell.dataForImage = dataImage
-            }
-            return cell
         case .additionalDescription:
             guard let cell = tableView
                 .dequeueReusableCell(
@@ -77,14 +67,8 @@ final class FilmDescriptionTableViewController: UITableViewController {
                 ) as? FilmParametrsTableViewCell
             else { return UITableViewCell() }
             cell.selectionStyle = .none
-            guard let budgetInt = viewModel?.filmDescription?.budget else { return UITableViewCell() }
-            guard let originalLabel = viewModel?.filmDescription?.originalTitle else { return UITableViewCell() }
-            guard let reliseDate = viewModel?.filmDescription?.releaseDate else { return UITableViewCell() }
-
-            cell.budgetLabelText = "Бюджет:\n \(String(budgetInt))$"
-            cell.originalTitleLabelText = "Оригинальное название:\n \(originalLabel)"
-            cell.reliseDataLabelText = "Дата релиза:\n \(reliseDate)"
-            return cell
+            guard let filmDescription = viewModel?.filmDescription else { return UITableViewCell() }
+            return cell.configureCell(filmDescription: filmDescription)
         }
     }
 

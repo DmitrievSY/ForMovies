@@ -10,9 +10,9 @@ final class FilmParametrsTableViewCell: UITableViewCell {
 
     // MARK: - Public Properties
 
-    var budgetLabelText = ""
-    var originalTitleLabelText = ""
-    var reliseDataLabelText = ""
+    private var budgetLabelText = ""
+    private var originalTitleLabelText = ""
+    private var reliseDataLabelText = ""
 
     // MARK: - Private Propertyes
 
@@ -33,6 +33,18 @@ final class FilmParametrsTableViewCell: UITableViewCell {
 
         createReliseDataLabel()
         setReliseDataLabelConstraint()
+    }
+
+    func configureCell(filmDescription: FilmDescription) -> UITableViewCell {
+        guard
+            let budgetInt = filmDescription.budget,
+            let originalLabel = filmDescription.originalTitle,
+            let reliseDate = filmDescription.releaseDate else { return UITableViewCell() }
+
+        budgetLabelText = "Бюджет:\n \(String(budgetInt))$"
+        originalTitleLabelText = "Оригинальное название:\n \(originalLabel)"
+        reliseDataLabelText = "Дата релиза:\n \(reliseDate)"
+        return self
     }
 
     // MARK: - Private Methods

@@ -29,6 +29,22 @@ final class FilmViewCell: UITableViewCell {
         setupCellView()
     }
 
+    func configureCell(filmDescription: FilmDescription) -> UITableViewCell {
+        filmTitleText = filmDescription.title
+        descriptionTitleText = filmDescription.overview
+
+        guard let image = filmDescription.posterPath else { return UITableViewCell() }
+        let staticImageAddress = "https://image.tmdb.org/t/p/w500"
+
+        guard let urlImage = URL(string: staticImageAddress + image)
+        else { return UITableViewCell() }
+        guard let dataImage = try? Data(contentsOf: urlImage) else { return UITableViewCell() }
+        DispatchQueue.main.async {
+            self.posterImageView.image = UIImage(data: dataImage)
+        }
+        return self
+    }
+
     // MARK: - Private Methods
 
     private func setupCellView() {
