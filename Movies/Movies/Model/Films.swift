@@ -3,12 +3,12 @@
 
 import Foundation
 /// структура принимаемого джсона
-struct Category: Codable {
+struct Category: Decodable {
     var results: [ResultsFilm]
 }
 
 /// структура описания фильма из джсона
-struct ResultsFilm: Codable {
+struct ResultsFilm: Decodable {
     var posterPath: String?
     var id: Int
     var overview: String
@@ -17,7 +17,7 @@ struct ResultsFilm: Codable {
 }
 
 /// структура описания фильма в запросе на определенный фильм
-struct FilmDescription: Codable {
+struct FilmDescription: Decodable {
     var title: String
     var posterPath: String?
     var overview: String

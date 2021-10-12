@@ -38,23 +38,26 @@ final class FilmParametrsTableViewCell: UITableViewCell {
     // MARK: - Private Methods
 
     private func createOriginalTitleLabel() {
-        originalTitleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        originalTitleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         originalTitleLabel.numberOfLines = 0
         originalTitleLabel.textColor = .darkGray
+        originalTitleLabel.text = originalTitleLabelText
         contentView.addSubview(originalTitleLabel)
     }
 
     private func createBudgetLabel() {
-        budgetLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        budgetLabel.font = UIFont.boldSystemFont(ofSize: 18)
         budgetLabel.numberOfLines = 0
         budgetLabel.textColor = .darkGray
+        budgetLabel.text = budgetLabelText
         contentView.addSubview(budgetLabel)
     }
 
     private func createReliseDataLabel() {
-        reliseDataLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        reliseDataLabel.font = UIFont.boldSystemFont(ofSize: 18)
         reliseDataLabel.numberOfLines = 0
         reliseDataLabel.textColor = .darkGray
+        reliseDataLabel.text = reliseDataLabelText
         contentView.addSubview(reliseDataLabel)
     }
 

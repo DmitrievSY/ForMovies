@@ -59,6 +59,7 @@ final class FilmsTableViewController: UITableViewController {
         let nav = FilmDescriptionTableViewController()
         guard let choosenFilmNumber = viewModel?.films?.results[indexPath.row].id else { return }
         nav.filmNumber = choosenFilmNumber
+        nav.viewModel = DetailsViewModel(filmNumber: choosenFilmNumber)
         navigationController?.pushViewController(nav, animated: true)
     }
 }
