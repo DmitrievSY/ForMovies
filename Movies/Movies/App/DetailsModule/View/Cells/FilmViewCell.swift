@@ -32,9 +32,9 @@ final class FilmViewCell: UITableViewCell {
 
         guard let imageString = filmDescription.posterPath else { return UITableViewCell() }
 
-        imageAPIService.imageRequest(stringURL: imageString) { image in
+        imageAPIService.imageRequest(stringURL: imageString) { [weak self] image in
             DispatchQueue.main.async {
-                self.posterImageView.image = image
+                self?.posterImageView.image = image
             }
         }
         return self
