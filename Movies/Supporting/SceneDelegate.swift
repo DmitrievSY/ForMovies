@@ -11,8 +11,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         _ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let viewModel = FilmsViewModel()
-        let navController = UINavigationController(rootViewController: FilmsTableViewController(viewModel: viewModel))
+
+        let assemble = Assemble()
+        let filmsModule = assemble.createFilmsModule()
+
+        let navController = UINavigationController(rootViewController: filmsModule)
+
         navController.navigationBar.prefersLargeTitles = true
 
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)

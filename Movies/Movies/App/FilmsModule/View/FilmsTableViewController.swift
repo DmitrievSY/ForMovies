@@ -59,9 +59,12 @@ final class FilmsTableViewController: UITableViewController {
     // MARK: - UITableViewDelegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let nav = FilmDescriptionTableViewController()
+
         guard let choosenFilmNumber = viewModel?.films?.results[indexPath.row].id else { return }
-        nav.viewModel = DetailsViewModel(filmNumber: choosenFilmNumber)
-        navigationController?.pushViewController(nav, animated: true)
+
+        let assemble = Assemble()
+        let detailsScreen = assemble.createDetailsModule(filmNumber: choosenFilmNumber)
+
+        navigationController?.pushViewController(detailsScreen, animated: true)
     }
 }
