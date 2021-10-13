@@ -1,4 +1,4 @@
-// Assemble.swift
+// Assembly.swift
 // Copyright © RM. All rights reserved.
 
 import UIKit
@@ -8,7 +8,7 @@ protocol AssembleProtocol {
     func createDetailsModule(filmNumber: Int) -> UIViewController
 }
 
-final class Assemble: AssembleProtocol {
+final class Assembly: AssembleProtocol {
     func createFilmsModule() -> UIViewController {
         let filmsViewModel = FilmsViewModel()
         let filmsView = FilmsTableViewController(viewModel: filmsViewModel)

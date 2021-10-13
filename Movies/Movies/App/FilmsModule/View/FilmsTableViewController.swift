@@ -7,6 +7,7 @@ final class FilmsTableViewController: UITableViewController {
     // MARK: - Private Property
 
     private var viewModel: FilmsViewModelProtocol?
+    var toDetails: ((Int) -> ())?
 
     // MARK: - Init
 
@@ -59,12 +60,13 @@ final class FilmsTableViewController: UITableViewController {
     // MARK: - UITableViewDelegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
         guard let choosenFilmNumber = viewModel?.films?.results[indexPath.row].id else { return }
+        guard let toDetails = toDetails else { return }
+        toDetails(choosenFilmNumber)
 
-        let assemble = Assemble()
-        let detailsScreen = assemble.createDetailsModule(filmNumber: choosenFilmNumber)
-
-        navigationController?.pushViewController(detailsScreen, animated: true)
+//        let assemble = Assembly()
+//        let detailsScreen = assemble.createDetailsModule(filmNumber: choosenFilmNumber)
+//
+//        navigationController?.pushViewController(detailsScreen, animated: true)
     }
 }

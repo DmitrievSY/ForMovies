@@ -11,7 +11,10 @@
 		8B3A455C26B1FF14006FF226 /* FilmDescriptionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3A455B26B1FF14006FF226 /* FilmDescriptionTableViewController.swift */; };
 		8B3A455F26B20161006FF226 /* FilmViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3A455E26B20161006FF226 /* FilmViewCell.swift */; };
 		8B4E6F5C2714BE9600D4D04E /* FilmsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4E6F5B2714BE9600D4D04E /* FilmsViewModel.swift */; };
-		8B4ECA0C2717189800F4F0EE /* Assemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4ECA0B2717189800F4F0EE /* Assemble.swift */; };
+		8B4ECA0C2717189800F4F0EE /* Assembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4ECA0B2717189800F4F0EE /* Assembly.swift */; };
+		8B4ECA1127173A5800F4F0EE /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4ECA1027173A5800F4F0EE /* BaseCoordinator.swift */; };
+		8B4ECA1727173B3900F4F0EE /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4ECA1627173B3900F4F0EE /* ApplicationCoordinator.swift */; };
+		8B4ECA1A27173CCA00F4F0EE /* FilmsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4ECA1927173CCA00F4F0EE /* FilmsCoordinator.swift */; };
 		8B5FAB022715CCD600EF8FDD /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5FAB012715CCD600EF8FDD /* DetailsViewModel.swift */; };
 		8B5FAB092715E14300EF8FDD /* MovieAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5FAB082715E14300EF8FDD /* MovieAPIService.swift */; };
 		8B5FAB0C2715E15C00EF8FDD /* ImageAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5FAB0B2715E15C00EF8FDD /* ImageAPIService.swift */; };
@@ -31,7 +34,10 @@
 		8B3A455B26B1FF14006FF226 /* FilmDescriptionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmDescriptionTableViewController.swift; sourceTree = "<group>"; };
 		8B3A455E26B20161006FF226 /* FilmViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmViewCell.swift; sourceTree = "<group>"; };
 		8B4E6F5B2714BE9600D4D04E /* FilmsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsViewModel.swift; sourceTree = "<group>"; };
-		8B4ECA0B2717189800F4F0EE /* Assemble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assemble.swift; sourceTree = "<group>"; };
+		8B4ECA0B2717189800F4F0EE /* Assembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assembly.swift; sourceTree = "<group>"; };
+		8B4ECA1027173A5800F4F0EE /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
+		8B4ECA1627173B3900F4F0EE /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
+		8B4ECA1927173CCA00F4F0EE /* FilmsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsCoordinator.swift; sourceTree = "<group>"; };
 		8B5FAB012715CCD600EF8FDD /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
 		8B5FAB082715E14300EF8FDD /* MovieAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAPIService.swift; sourceTree = "<group>"; };
 		8B5FAB0B2715E15C00EF8FDD /* ImageAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAPIService.swift; sourceTree = "<group>"; };
@@ -133,14 +139,33 @@
 		8B4ECA0A2717186B00F4F0EE /* Assemble */ = {
 			isa = PBXGroup;
 			children = (
-				8B4ECA0B2717189800F4F0EE /* Assemble.swift */,
+				8B4ECA0B2717189800F4F0EE /* Assembly.swift */,
 			);
 			path = Assemble;
+			sourceTree = "<group>";
+		};
+		8B4ECA0F2717290B00F4F0EE /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				8B4ECA1427173A6400F4F0EE /* FilmsCoordinator */,
+				8B4ECA1027173A5800F4F0EE /* BaseCoordinator.swift */,
+				8B4ECA1627173B3900F4F0EE /* ApplicationCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		8B4ECA1427173A6400F4F0EE /* FilmsCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				8B4ECA1927173CCA00F4F0EE /* FilmsCoordinator.swift */,
+			);
+			path = FilmsCoordinator;
 			sourceTree = "<group>";
 		};
 		8B578C9326B47E7E00D38EE6 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				8B4ECA0F2717290B00F4F0EE /* Coordinator */,
 				8B4ECA0A2717186B00F4F0EE /* Assemble */,
 				8B5FAB052715E02F00EF8FDD /* MovieAPIService */,
 				8B5FAB062715E05700EF8FDD /* ImageAPIService */,
@@ -342,17 +367,20 @@
 				8B3A455F26B20161006FF226 /* FilmViewCell.swift in Sources */,
 				8B63C89A26B344AF00F86B6D /* FilmParametrsTableViewCell.swift in Sources */,
 				8B4E6F5C2714BE9600D4D04E /* FilmsViewModel.swift in Sources */,
+				8B4ECA1A27173CCA00F4F0EE /* FilmsCoordinator.swift in Sources */,
 				8B3A455626B1CDC1006FF226 /* FilmsTableViewController.swift in Sources */,
 				8B61FBDF26AF020600B9C4B1 /* AppDelegate.swift in Sources */,
-				8B4ECA0C2717189800F4F0EE /* Assemble.swift in Sources */,
+				8B4ECA0C2717189800F4F0EE /* Assembly.swift in Sources */,
 				8B5FAB15271626AB00EF8FDD /* FilmDescription.swift in Sources */,
 				8B5FAB0C2715E15C00EF8FDD /* ImageAPIService.swift in Sources */,
 				8B5FAB092715E14300EF8FDD /* MovieAPIService.swift in Sources */,
 				8B61FBE126AF020600B9C4B1 /* SceneDelegate.swift in Sources */,
+				8B4ECA1127173A5800F4F0EE /* BaseCoordinator.swift in Sources */,
 				8B5FAB022715CCD600EF8FDD /* DetailsViewModel.swift in Sources */,
 				8B5FAB102716265400EF8FDD /* ResultsFilm.swift in Sources */,
 				8B61FC4926AF566100B9C4B1 /* MoviesTableViewCell.swift in Sources */,
 				8B3A455C26B1FF14006FF226 /* FilmDescriptionTableViewController.swift in Sources */,
+				8B4ECA1727173B3900F4F0EE /* ApplicationCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
