@@ -18,8 +18,7 @@ final class MoviesTableViewCell: UITableViewCell {
     private let backOverviewView = UIView()
     private let backVoteLabelView = UIView()
 
-    /// until create a network service
-    private let viewModel = FilmsViewModel()
+    private let imageAPIService = ImageAPIService()
 
     // MARK: - Set Selected
 
@@ -34,8 +33,9 @@ final class MoviesTableViewCell: UITableViewCell {
         filmsOverviewLabel.text = films.results[indexPath.row].overview
         filmsTitleLabel.text = films.results[indexPath.row].title
         voteLabel.text = String(films.results[indexPath.row].voteAverage)
+        guard let imageURLString = films.results[indexPath.row].posterPath else { return UITableViewCell() }
 
-        viewModel.imageRequest(row: indexPath.row) { [weak self] image in
+        imageAPIService.imageRequest(stringURL: imageURLString) { [weak self] image in
             DispatchQueue.main.async {
                 self?.filmsPosterImageView.image = image
             }
@@ -84,6 +84,7 @@ final class MoviesTableViewCell: UITableViewCell {
     private func createOverviewLabelCell() {
         filmsOverviewLabel.isScrollEnabled = false
         filmsOverviewLabel.font = UIFont.systemFont(ofSize: 14)
+        filmsOverviewLabel.isUserInteractionEnabled = false
         filmsOverviewLabel.backgroundColor = .white
         backOverviewView.addSubview(filmsOverviewLabel)
     }

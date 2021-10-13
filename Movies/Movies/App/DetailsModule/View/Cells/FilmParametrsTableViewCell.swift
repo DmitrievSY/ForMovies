@@ -4,15 +4,15 @@
 import UIKit
 
 final class FilmParametrsTableViewCell: UITableViewCell {
+    enum LabelDescriptions: String {
+        case budget = "Бюджет:\n"
+        case originaleTitle = "Оригинальное название:\n"
+        case reliseDate = "Дата релиза:\n"
+    }
+
     // MARK: - Static Property
 
     static let identifier = "FilmParametrsTableViewCell"
-
-    // MARK: - Public Properties
-
-    var budgetLabelText = ""
-    var originalTitleLabelText = ""
-    var reliseDataLabelText = ""
 
     // MARK: - Private Propertyes
 
@@ -35,24 +35,36 @@ final class FilmParametrsTableViewCell: UITableViewCell {
         setReliseDataLabelConstraint()
     }
 
+    func configureCell(filmDescription: FilmDescription) -> UITableViewCell {
+        guard
+            let budgetInt = filmDescription.budget,
+            let originalLabel = filmDescription.originalTitle,
+            let reliseDate = filmDescription.releaseDate else { return UITableViewCell() }
+
+        budgetLabel.text = String(LabelDescriptions.budget.rawValue + String(budgetInt) + "$")
+        originalTitleLabel.text = String(LabelDescriptions.originaleTitle.rawValue + originalLabel)
+        reliseDataLabel.text = String(LabelDescriptions.reliseDate.rawValue + reliseDate)
+        return self
+    }
+
     // MARK: - Private Methods
 
     private func createOriginalTitleLabel() {
-        originalTitleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        originalTitleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         originalTitleLabel.numberOfLines = 0
         originalTitleLabel.textColor = .darkGray
         contentView.addSubview(originalTitleLabel)
     }
 
     private func createBudgetLabel() {
-        budgetLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        budgetLabel.font = UIFont.boldSystemFont(ofSize: 18)
         budgetLabel.numberOfLines = 0
         budgetLabel.textColor = .darkGray
         contentView.addSubview(budgetLabel)
     }
 
     private func createReliseDataLabel() {
-        reliseDataLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        reliseDataLabel.font = UIFont.boldSystemFont(ofSize: 18)
         reliseDataLabel.numberOfLines = 0
         reliseDataLabel.textColor = .darkGray
         contentView.addSubview(reliseDataLabel)
