@@ -4,9 +4,18 @@
 import UIKit
 
 final class FilmsTableViewController: UITableViewController {
+    enum FilmsTitles: String {
+        case screenTitle = "Movies"
+        case alertTitle = "Sorry"
+    }
+
     // MARK: - Private Property
 
     private var viewModel: FilmsViewModelProtocol?
+
+    // MARK: - Internal propery
+
+    var toDetails: IntHandler?
 
     // MARK: - Init
 
@@ -29,8 +38,14 @@ final class FilmsTableViewController: UITableViewController {
     // MARK: - Private Methods
 
     private func setConfigCell() {
+        viewModel?.showAlert = { errorString in
+            self.createAlert(
+                title: FilmsTitles.alertTitle.rawValue,
+                message: errorString
+            )
+        }
         viewModel?.reloadData = { self.tableView.reloadData() }
-        title = "Movies"
+        title = FilmsTitles.screenTitle.rawValue
         tableView.separatorStyle = .none
         tableView.register(MoviesTableViewCell.self, forCellReuseIdentifier: MoviesTableViewCell.identifier)
     }
@@ -59,9 +74,8 @@ final class FilmsTableViewController: UITableViewController {
     // MARK: - UITableViewDelegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let nav = FilmDescriptionTableViewController()
         guard let choosenFilmNumber = viewModel?.films?.results[indexPath.row].id else { return }
-        nav.viewModel = DetailsViewModel(filmNumber: choosenFilmNumber)
-        navigationController?.pushViewController(nav, animated: true)
+        guard let toDetails = toDetails else { return }
+        toDetails(choosenFilmNumber)
     }
 }
