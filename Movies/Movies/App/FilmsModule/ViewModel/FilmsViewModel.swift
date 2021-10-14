@@ -5,7 +5,8 @@ import UIKit
 
 protocol FilmsViewModelProtocol {
     var films: Category? { get set }
-    var reloadData: (() -> ())? { get set }
+    var reloadData: VoidHandler? { get set }
+    var showAlert: StringHandler? { get set }
 }
 
 final class FilmsViewModel: FilmsViewModelProtocol {
@@ -18,7 +19,8 @@ final class FilmsViewModel: FilmsViewModelProtocol {
     // MARK: - Internal Property
 
     var films: Category?
-    var reloadData: (() -> ())?
+    var reloadData: VoidHandler?
+    var showAlert: StringHandler?
 
     // MARK: - Private property
 
@@ -37,7 +39,10 @@ final class FilmsViewModel: FilmsViewModelProtocol {
         movieAPIService.parsingFilms { [weak self] result in
             switch result {
             case let .failure(error):
-                print(error.localizedDescription)
+                guard let showAlert = self?.showAlert else { return }
+                DispatchQueue.main.async {
+                    showAlert(error.localizedDescription)
+                }
             case let .success(films):
                 self?.films = films
                 DispatchQueue.main.async {

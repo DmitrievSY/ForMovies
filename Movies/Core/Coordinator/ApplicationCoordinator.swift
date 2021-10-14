@@ -4,7 +4,6 @@
 import Foundation
 
 final class ApplicationCoordinator: BaseCoordinator {
-    
     override func start() {
         toMain()
     }

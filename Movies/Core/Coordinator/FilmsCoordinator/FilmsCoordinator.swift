@@ -7,7 +7,7 @@ import UIKit
 final class FilmsCoordinator: BaseCoordinator {
     // MARK: - Internal property
 
-    var onFinishFlow: (() -> ())?
+    var onFinishFlow: VoidHandler?
 
     // MARK: - Private property
 
