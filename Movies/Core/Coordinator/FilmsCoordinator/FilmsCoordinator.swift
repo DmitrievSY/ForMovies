@@ -4,24 +4,44 @@
 import Foundation
 import UIKit
 
-final class MainCoordinator: BaseCoordinator {
-    var rootController: UINavigationController?
+final class FilmsCoordinator: BaseCoordinator {
+    // MARK: - Internal property
+
     var onFinishFlow: (() -> ())?
-    let assembly = Assembly()
+
+    // MARK: - Private property
+
+    private var rootController: UINavigationController?
+    private let assembly = Assembly()
+
+    // MARK: - Init
+
+    convenience init(rootController: UINavigationController) {
+        self.init()
+        self.rootController = rootController
+    }
 
     override func start() {
         showFilmsModule()
     }
 
-    private func showFilmsModule() {
-        let controller = assembly.createFilmsModule() as? FilmsTableViewController
+    // MARK: - Private methods
 
-        controller?.toDetails = { [weak self] filmNumber in
+    private func showFilmsModule() {
+        guard let controller = assembly.createFilmsModule() as? FilmsTableViewController else { return }
+
+        controller.toDetails = { [weak self] filmNumber in
             self?.showFilmDetails(filmNumber: filmNumber)
         }
 
-        rootController = UINavigationController(rootViewController: controller ?? UIViewController())
-        setAsRoot(rootController ?? UIViewController())
+        if rootController == nil {
+            let navController = UINavigationController(rootViewController: controller)
+            rootController = navController
+            setAsRoot(navController)
+        } else if let rootController = rootController {
+            rootController.pushViewController(controller, animated: true)
+            setAsRoot(rootController)
+        }
     }
 
     private func showFilmDetails(filmNumber: Int) {

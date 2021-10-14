@@ -3,12 +3,14 @@
 
 import UIKit
 
-protocol AssembleProtocol {
+protocol AssemblyProtocol {
     func createFilmsModule() -> UIViewController
     func createDetailsModule(filmNumber: Int) -> UIViewController
 }
 
-final class Assembly: AssembleProtocol {
+final class Assembly: AssemblyProtocol {
+    // MARK: - Internal methods
+
     func createFilmsModule() -> UIViewController {
         let filmsViewModel = FilmsViewModel()
         let filmsView = FilmsTableViewController(viewModel: filmsViewModel)

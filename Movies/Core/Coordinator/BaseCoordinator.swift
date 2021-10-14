@@ -4,7 +4,12 @@
 import UIKit
 /// Base coordinator
 class BaseCoordinator {
+    // MARK: - Internal property
+
     var childCoordinators: [BaseCoordinator] = []
+
+    // MARK: - Internal methods
+
     func start() {}
 
     func addDependency(_ coordinator: BaseCoordinator) {
