@@ -29,11 +29,11 @@ final class MoviesTableViewCell: UITableViewCell {
 
     // MARK: - Internal Methods
 
-    func configurateCell(films: Category, for indexPath: IndexPath) -> UITableViewCell {
-        filmsOverviewLabel.text = films.results[indexPath.row].overview
-        filmsTitleLabel.text = films.results[indexPath.row].title
-        voteLabel.text = String(films.results[indexPath.row].voteAverage)
-        guard let imageURLString = films.results[indexPath.row].posterPath else { return UITableViewCell() }
+    func configurateCell(films: [ResultsFilm], for indexPath: IndexPath) -> UITableViewCell {
+        filmsOverviewLabel.text = films[indexPath.row].overview
+        filmsTitleLabel.text = films[indexPath.row].title
+        voteLabel.text = String(films[indexPath.row].voteAverage)
+        guard let imageURLString = films[indexPath.row].posterPath else { return UITableViewCell() }
 
         imageAPIService.imageRequest(stringURL: imageURLString) { [weak self] image in
             DispatchQueue.main.async {

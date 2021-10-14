@@ -53,7 +53,7 @@ final class FilmsTableViewController: UITableViewController {
     // MARK: - UITableViewDataSource
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let filmsCount = viewModel?.films?.results.count else { return Int() }
+        guard let filmsCount = viewModel?.films?.count else { return Int() }
         return filmsCount
     }
 
@@ -74,7 +74,7 @@ final class FilmsTableViewController: UITableViewController {
     // MARK: - UITableViewDelegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let choosenFilmNumber = viewModel?.films?.results[indexPath.row].id else { return }
+        guard let choosenFilmNumber = viewModel?.films?[indexPath.row].id else { return }
         guard let toDetails = toDetails else { return }
         toDetails(choosenFilmNumber)
     }

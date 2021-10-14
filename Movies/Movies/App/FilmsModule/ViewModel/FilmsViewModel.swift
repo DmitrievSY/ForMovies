@@ -4,7 +4,7 @@
 import UIKit
 
 protocol FilmsViewModelProtocol {
-    var films: Category? { get set }
+    var films: [ResultsFilm]? { get set }
     var reloadData: VoidHandler? { get set }
     var showAlert: StringHandler? { get set }
 }
@@ -18,9 +18,10 @@ final class FilmsViewModel: FilmsViewModelProtocol {
 
     // MARK: - Internal Property
 
-    var films: Category?
+    var films: [ResultsFilm]?
     var reloadData: VoidHandler?
     var showAlert: StringHandler?
+    var repository: Repository
 
     // MARK: - Private property
 
@@ -28,7 +29,8 @@ final class FilmsViewModel: FilmsViewModelProtocol {
 
     // MARK: - Init
 
-    init() {
+    init(repository: Repository) {
+        self.repository = repository
         movieAPIService = MovieAPIService()
         setRequest()
     }
@@ -36,17 +38,30 @@ final class FilmsViewModel: FilmsViewModelProtocol {
     // MARK: - Private methods
 
     private func setRequest() {
-        movieAPIService.parsingFilms { [weak self] result in
-            switch result {
-            case let .failure(error):
-                guard let showAlert = self?.showAlert else { return }
-                DispatchQueue.main.async {
-                    showAlert(error.localizedDescription)
-                }
-            case let .success(films):
-                self?.films = films
-                DispatchQueue.main.async {
-                    self?.reloadData?()
+        let baseFilms = repository.get(type: ResultsFilm.self)
+
+        var movies: [ResultsFilm]?
+        baseFilms?.forEach { movie in
+            (movies?.append(movie)) ?? (movies = [movie])
+        }
+        films = movies ?? []
+
+        if films == [] {
+            movieAPIService.parsingFilms { [weak self] result in
+                switch result {
+                case let .failure(error):
+                    guard let showAlert = self?.showAlert else { return }
+                    DispatchQueue.main.async {
+                        showAlert(error.localizedDescription)
+                    }
+                case let .success(films):
+                    guard let films = films else { return }
+
+                    self?.films = films.results
+                    DispatchQueue.main.async {
+                        self?.repository.save(object: films.results)
+                        self?.reloadData?()
+                    }
                 }
             }
         }

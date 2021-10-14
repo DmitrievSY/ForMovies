@@ -12,7 +12,8 @@ final class Assembly: AssemblyProtocol {
     // MARK: - Internal methods
 
     func createFilmsModule() -> UIViewController {
-        let filmsViewModel = FilmsViewModel()
+        let repository = RealmRepository()
+        let filmsViewModel = FilmsViewModel(repository: repository)
         let filmsView = FilmsTableViewController(viewModel: filmsViewModel)
         return filmsView
     }

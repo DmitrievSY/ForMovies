@@ -2,16 +2,21 @@
 // Copyright © RM. All rights reserved.
 
 import Foundation
+import RealmSwift
 /// Model for movies
-struct Category: Decodable {
+class Category: Decodable {
     var results: [ResultsFilm]
 }
 
 /// Model for movie properties
-struct ResultsFilm: Decodable {
-    var posterPath: String?
-    var id: Int
-    var overview: String
-    var title: String
-    var voteAverage: Float
+class ResultsFilm: Object, Decodable {
+    @objc dynamic var posterPath: String?
+    @objc dynamic var id: Int
+    @objc dynamic var overview: String
+    @objc dynamic var title: String
+    @objc dynamic var voteAverage: Float
+
+    override static func primaryKey() -> String? {
+        "id"
+    }
 }
