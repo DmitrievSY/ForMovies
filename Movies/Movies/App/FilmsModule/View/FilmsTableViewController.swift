@@ -63,10 +63,5 @@ final class FilmsTableViewController: UITableViewController {
         guard let choosenFilmNumber = viewModel?.films?.results[indexPath.row].id else { return }
         guard let toDetails = toDetails else { return }
         toDetails(choosenFilmNumber)
-
-//        let assemble = Assembly()
-//        let detailsScreen = assemble.createDetailsModule(filmNumber: choosenFilmNumber)
-//
-//        navigationController?.pushViewController(detailsScreen, animated: true)
     }
 }
