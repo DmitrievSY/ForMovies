@@ -2,12 +2,18 @@
 // Copyright © RM. All rights reserved.
 
 import Foundation
+import RealmSwift
 /// Model for film description
-struct FilmDescription: Decodable {
-    var title: String
-    var posterPath: String?
-    var overview: String
-    var budget: Int?
-    var originalTitle: String?
-    var releaseDate: String?
+class FilmDescription: Object, Decodable {
+    @objc dynamic var title: String
+    @objc dynamic var posterPath: String?
+    @objc dynamic var overview: String
+    @objc dynamic var budget: Int
+    @objc dynamic var originalTitle: String?
+    @objc dynamic var releaseDate: String?
+    @objc dynamic var filmNumber: String?
+
+    override static func primaryKey() -> String? {
+        "filmNumber"
+    }
 }

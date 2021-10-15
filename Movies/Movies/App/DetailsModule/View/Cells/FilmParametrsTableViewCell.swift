@@ -37,11 +37,10 @@ final class FilmParametrsTableViewCell: UITableViewCell {
 
     func configureCell(filmDescription: FilmDescription) -> UITableViewCell {
         guard
-            let budgetInt = filmDescription.budget,
             let originalLabel = filmDescription.originalTitle,
             let reliseDate = filmDescription.releaseDate else { return UITableViewCell() }
 
-        budgetLabel.text = String(LabelDescriptions.budget.rawValue + String(budgetInt) + "$")
+        budgetLabel.text = String(LabelDescriptions.budget.rawValue + String(filmDescription.budget) + "$")
         originalTitleLabel.text = String(LabelDescriptions.originaleTitle.rawValue + originalLabel)
         reliseDataLabel.text = String(LabelDescriptions.reliseDate.rawValue + reliseDate)
         return self

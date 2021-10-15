@@ -4,7 +4,7 @@
 import UIKit
 
 protocol FilmsViewModelProtocol {
-    var films: Category? { get set }
+    var films: [ResultsFilm]? { get set }
     var reloadData: VoidHandler? { get set }
     var showAlert: StringHandler? { get set }
 }
@@ -18,9 +18,10 @@ final class FilmsViewModel: FilmsViewModelProtocol {
 
     // MARK: - Internal Property
 
-    var films: Category?
+    var films: [ResultsFilm]?
     var reloadData: VoidHandler?
     var showAlert: StringHandler?
+    var repository: Repository
 
     // MARK: - Private property
 
@@ -28,7 +29,8 @@ final class FilmsViewModel: FilmsViewModelProtocol {
 
     // MARK: - Init
 
-    init() {
+    init(repository: Repository) {
+        self.repository = repository
         movieAPIService = MovieAPIService()
         setRequest()
     }
@@ -36,6 +38,23 @@ final class FilmsViewModel: FilmsViewModelProtocol {
     // MARK: - Private methods
 
     private func setRequest() {
+        requestFromDB()
+        if films == [] {
+            requestFromNet()
+        }
+    }
+
+    private func requestFromDB() {
+        let baseFilms = repository.get(type: ResultsFilm.self, column: nil, filmNumber: nil)
+
+        var movies: [ResultsFilm]?
+        baseFilms?.forEach { movie in
+            (movies?.append(movie)) ?? (movies = [movie])
+        }
+        films = movies ?? []
+    }
+
+    private func requestFromNet() {
         movieAPIService.parsingFilms { [weak self] result in
             switch result {
             case let .failure(error):
@@ -44,8 +63,11 @@ final class FilmsViewModel: FilmsViewModelProtocol {
                     showAlert(error.localizedDescription)
                 }
             case let .success(films):
-                self?.films = films
+                guard let films = films else { return }
                 DispatchQueue.main.async {
+                    let movies = films.results
+                    self?.repository.save(object: movies)
+                    self?.requestFromDB()
                     self?.reloadData?()
                 }
             }

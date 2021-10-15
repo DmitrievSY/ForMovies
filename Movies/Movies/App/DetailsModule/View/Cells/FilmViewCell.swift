@@ -15,7 +15,7 @@ final class FilmViewCell: UITableViewCell {
     private let descriptionTitle = UILabel()
     private let backDescriptionView = UIView()
     private let backPostView = UIView()
-    private let imageAPIService = ImageAPIService()
+    private let imageService = ImageService()
 
     // MARK: - Set Selected
 
@@ -30,9 +30,9 @@ final class FilmViewCell: UITableViewCell {
         filmTitle.text = filmDescription.title
         descriptionTitle.text = filmDescription.overview
 
-        guard let imageString = filmDescription.posterPath else { return UITableViewCell() }
+        let imageString = filmDescription.posterPath ?? ""
 
-        imageAPIService.imageRequest(stringURL: imageString) { [weak self] image in
+        imageService.getImage(url: imageString) { [weak self] image in
             DispatchQueue.main.async {
                 self?.posterImageView.image = image
             }
