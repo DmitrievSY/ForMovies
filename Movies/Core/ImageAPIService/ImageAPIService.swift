@@ -3,25 +3,29 @@
 
 import UIKit
 
-protocol ImageApiServiceProtocol {
-    func imageRequest(stringURL: String, completion: @escaping (UIImage) -> ())
+protocol ImageAPIServiceProtocol {
+
+    func getPhoto(url: URL, completion: @escaping (Swift.Result<UIImage, Error>) -> Void)
 }
 
-final class ImageAPIService: ImageApiServiceProtocol {
+final class ImageAPIService: ImageAPIServiceProtocol {
     // MARK: - Privat property
 
     private let urlStaticPart = "https://image.tmdb.org/t/p/w500"
 
     // MARK: - Internal method
 
-    func imageRequest(stringURL: String, completion: @escaping (UIImage) -> ()) {
+    func getPhoto(url: URL, completion: @escaping (Swift.Result<UIImage, Error>) -> Void) {
         var image = UIImage()
-        guard let imageURL = URL(string: urlStaticPart + stringURL)
-        else { return }
-        URLSession.shared.dataTask(with: imageURL) { data, _, _ in
+        let urlString = url.absoluteString
+        guard let imageURL = URL(string: urlStaticPart + urlString) else { return }
+        URLSession.shared.dataTask(with: imageURL) { data, _, error in
+            if let error = error {
+                completion(.failure(error))
+            }
             guard let data = data else { return }
             image = UIImage(data: data) ?? UIImage()
-            completion(image)
+            completion(.success(image))
         }.resume()
     }
 }

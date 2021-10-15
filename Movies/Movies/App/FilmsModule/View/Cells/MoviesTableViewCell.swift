@@ -17,8 +17,7 @@ final class MoviesTableViewCell: UITableViewCell {
     private let voteLabel = UILabel()
     private let backOverviewView = UIView()
     private let backVoteLabelView = UIView()
-
-    private let imageAPIService = ImageAPIService()
+    private let imageService = ImageService()
 
     // MARK: - Set Selected
 
@@ -33,9 +32,9 @@ final class MoviesTableViewCell: UITableViewCell {
         filmsOverviewLabel.text = films[indexPath.row].overview
         filmsTitleLabel.text = films[indexPath.row].title
         voteLabel.text = String(films[indexPath.row].voteAverage)
-        guard let imageURLString = films[indexPath.row].posterPath else { return UITableViewCell() }
+        let imageURLString = films[indexPath.row].posterPath ?? ""
 
-        imageAPIService.imageRequest(stringURL: imageURLString) { [weak self] image in
+        imageService.getImage(url: imageURLString) { [weak self] image in
             DispatchQueue.main.async {
                 self?.filmsPosterImageView.image = image
             }

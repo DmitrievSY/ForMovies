@@ -6,8 +6,7 @@ import RealmSwift
 
 protocol Repository {
     func save<T>(object: [T]) where T: Object
-    func get<T>(type: T.Type) -> Results<T>? where T: Object
-    func remove<T>(object: Results<T>) where T: Object
+    func get<T>(type: T.Type, column: String?, filmNumber: Int?) -> Results<T>? where T: Object
 }
 
 final class RealmRepository: Repository {
@@ -16,9 +15,7 @@ final class RealmRepository: Repository {
     func save<T>(object: [T]) where T: Object {
         do {
             let realm = try Realm(configuration: deleteMigration)
-            print(realm.configuration.fileURL)
             realm.beginWrite()
-//            realm.delete(object)
             realm.add(object, update: .modified)
             try realm.commitWrite()
         } catch {
@@ -26,20 +23,18 @@ final class RealmRepository: Repository {
         }
     }
 
-    func remove<T>(object: Results<T>) where T: Object {
-        do {
-            let realm = try Realm(configuration: deleteMigration)
-            try realm.write {
-                realm.delete(object)
-            }
-        } catch {
-            print(error.localizedDescription)
+    func get<T>(type: T.Type, column: String? = nil, filmNumber: Int? = nil) -> Results<T>? where T: Object {
+        if column != nil {
+            guard let column = column,
+                  let filmNumber = filmNumber else { return nil }
+            let predicate = NSPredicate(format: "\(column) == %@", String(filmNumber))
+            let realm = try? Realm()
+            let filmDescriptionRealm = realm?.objects(type).filter(predicate)
+            return filmDescriptionRealm
+        } else {
+            let realm = try? Realm(configuration: deleteMigration)
+            guard let results = realm?.objects(type) else { return nil }
+            return results
         }
-    }
-
-    func get<T>(type: T.Type) -> Results<T>? where T: Object {
-        let realm = try? Realm(configuration: deleteMigration)
-        guard let results = realm?.objects(type) else { return nil }
-        return results
     }
 }

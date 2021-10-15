@@ -38,7 +38,7 @@ final class FilmsViewModel: FilmsViewModelProtocol {
     // MARK: - Private methods
 
     private func setRequest() {
-        let baseFilms = repository.get(type: ResultsFilm.self)
+        let baseFilms = repository.get(type: ResultsFilm.self, column: nil, filmNumber: nil)
 
         var movies: [ResultsFilm]?
         baseFilms?.forEach { movie in
@@ -59,7 +59,8 @@ final class FilmsViewModel: FilmsViewModelProtocol {
 
                     self?.films = films.results
                     DispatchQueue.main.async {
-                        self?.repository.save(object: films.results)
+                        let movies = films.results
+                        self?.repository.save(object: movies)
                         self?.reloadData?()
                     }
                 }
