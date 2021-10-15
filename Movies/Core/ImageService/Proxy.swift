@@ -3,11 +3,11 @@
 
 import UIKit
 
-protocol LoadImageProtocol {
+protocol ProxyProtocol {
     func loadImage(url: String, completion: @escaping (Swift.Result<UIImage, Error>) -> Void)
 }
 
-final class Proxy: LoadImageProtocol {
+final class Proxy: ProxyProtocol {
     // MARK: - Private Properties
 
     private let imageAPIService: ImageAPIServiceProtocol
@@ -31,7 +31,8 @@ final class Proxy: LoadImageProtocol {
         if image == nil {
             imageAPIService.getPhoto(url: url) { result in
                 switch result {
-                case let .success(image):
+                case let .success(data):
+                    guard let image = UIImage(data: data) else { return }
                     self.cacheImageService.saveImageToCache(url: url.absoluteString, image: image)
                     completion(.success(image))
                 case let .failure(error):

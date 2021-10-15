@@ -20,9 +20,9 @@ final class Assembly: AssemblyProtocol {
 
     func createDetailsModule(filmNumber: Int) -> UIViewController {
         let repository = RealmRepository()
-        let detailsViewScreen = FilmDescriptionTableViewController()
+        let detailsView = FilmDescriptionTableViewController()
         let detailsViewModel = DetailsViewModel(filmNumber: filmNumber, repository: repository)
-        detailsViewScreen.viewModel = detailsViewModel
-        return detailsViewScreen
+        detailsView.viewModel = detailsViewModel
+        return detailsView
     }
 }

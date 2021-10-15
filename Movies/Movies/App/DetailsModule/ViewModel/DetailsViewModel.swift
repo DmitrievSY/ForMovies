@@ -14,7 +14,7 @@ final class DetailsViewModel: DetailsViewModelProtocol {
     // MARK: - Internal property
 
     var repository: RealmRepository?
-    var reloadData: (() -> ())?
+    var reloadData: VoidHandler?
     var filmDescription: FilmDescription?
     let movieAPIService: MovieAPIServiceProtocol
 
@@ -34,6 +34,13 @@ final class DetailsViewModel: DetailsViewModelProtocol {
     // MARK: - Private method
 
     private func setRequest() {
+        requestFromDB()
+        if filmDescription == nil {
+            requestFromNet()
+        }
+    }
+
+    private func requestFromDB() {
         let filmDescriptionRealm = repository?.get(
             type: FilmDescription.self,
             column: "filmNumber",
@@ -44,22 +51,22 @@ final class DetailsViewModel: DetailsViewModelProtocol {
             detail = details
         }
         filmDescription = detail
+    }
 
-        if filmDescription == nil {
-            movieAPIService.parsingDescription(filmNumber: filmNumber, completion: { [weak self] result in
-                switch result {
-                case let .failure(error):
-                    print(error.localizedDescription)
-                case let .success(filmDescription):
-                    self?.filmDescription = filmDescription
-                    self?.filmDescription?.filmNumber = String(self?.filmNumber ?? 0)
+    private func requestFromNet() {
+        movieAPIService.parsingDescription(filmNumber: filmNumber, completion: { [weak self] result in
+            switch result {
+            case let .failure(error):
+                print(error.localizedDescription)
+            case let .success(filmDescription):
+                filmDescription.filmNumber = String(self?.filmNumber ?? 0)
 
-                    DispatchQueue.main.async {
-                        self?.reloadData?()
-                        self?.repository?.save(object: [filmDescription])
-                    }
+                DispatchQueue.main.async {
+                    self?.repository?.save(object: [filmDescription])
+                    self?.requestFromDB()
+                    self?.reloadData?()
                 }
-            })
-        }
+            }
+        })
     }
 }

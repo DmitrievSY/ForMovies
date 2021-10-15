@@ -16,7 +16,6 @@ final class FilmViewCell: UITableViewCell {
     private let backDescriptionView = UIView()
     private let backPostView = UIView()
     private let imageService = ImageService()
-    private let imageAPIService = ImageAPIService()
 
     // MARK: - Set Selected
 
