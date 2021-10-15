@@ -38,6 +38,7 @@ final class FilmsTableViewController: UITableViewController {
     // MARK: - Private Methods
 
     private func setConfigCell() {
+        tableView.accessibilityIdentifier = "TableView"
         viewModel?.showAlert = { errorString in
             self.createAlert(
                 title: FilmsTitles.alertTitle.rawValue,

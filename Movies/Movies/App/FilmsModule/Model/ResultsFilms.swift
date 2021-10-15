@@ -1,4 +1,4 @@
-// ResultsFilm.swift
+// ResultsFilms.swift
 // Copyright © RM. All rights reserved.
 
 import Foundation

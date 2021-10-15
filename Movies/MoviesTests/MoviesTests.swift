@@ -17,9 +17,9 @@ class MockNavigationController: UINavigationController {
 class MoviesTests: XCTestCase {
     var navigationController = MockNavigationController()
     var filmsCoordinator: FilmsCoordinator?
-    var viewModel = FilmsViewModel()
 
     override func setUpWithError() throws {
+        // let repository = RealmRepository()
         filmsCoordinator = FilmsCoordinator(rootController: navigationController)
     }
 
