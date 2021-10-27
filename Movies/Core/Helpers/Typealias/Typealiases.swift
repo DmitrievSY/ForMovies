@@ -1,5 +1,5 @@
 // Typealiases.swift
-// Copyright © RM. All rights reserved.
+// Copyright © DmitrievSY. All rights reserved.
 
 import Foundation
 

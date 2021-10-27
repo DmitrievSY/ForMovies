@@ -1,5 +1,5 @@
 // RealmServiceTests.swift
-// Copyright © RM. All rights reserved.
+// Copyright © DmitrievSY. All rights reserved.
 
 @testable import Movies
 import RealmSwift

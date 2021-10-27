@@ -1,5 +1,5 @@
 // MoviesTests.swift
-// Copyright © RM. All rights reserved.
+// Copyright © DmitrievSY. All rights reserved.
 
 @testable import Movies
 import XCTest
@@ -19,7 +19,6 @@ class MoviesTests: XCTestCase {
     var filmsCoordinator: FilmsCoordinator?
 
     override func setUpWithError() throws {
-        // let repository = RealmRepository()
         filmsCoordinator = FilmsCoordinator(rootController: navigationController)
     }
 
