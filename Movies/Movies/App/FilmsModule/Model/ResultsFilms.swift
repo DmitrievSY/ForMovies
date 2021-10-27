@@ -1,5 +1,5 @@
-// ResultsFilm.swift
-// Copyright © RM. All rights reserved.
+// ResultsFilms.swift
+// Copyright © DmitrievSY. All rights reserved.
 
 import Foundation
 import RealmSwift

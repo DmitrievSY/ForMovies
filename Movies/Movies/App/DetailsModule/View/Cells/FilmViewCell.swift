@@ -1,5 +1,5 @@
 // FilmViewCell.swift
-// Copyright © RM. All rights reserved.
+// Copyright © DmitrievSY. All rights reserved.
 
 import UIKit
 
@@ -62,6 +62,7 @@ final class FilmViewCell: UITableViewCell {
     }
 
     private func createFilmTitle() {
+        filmTitle.accessibilityIdentifier = "Title"
         filmTitle.textColor = .darkGray
         filmTitle.font = UIFont.boldSystemFont(ofSize: 30)
         filmTitle.numberOfLines = 0

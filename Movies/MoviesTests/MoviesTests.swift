@@ -1,5 +1,5 @@
 // MoviesTests.swift
-// Copyright © RM. All rights reserved.
+// Copyright © DmitrievSY. All rights reserved.
 
 @testable import Movies
 import XCTest
@@ -17,7 +17,6 @@ class MockNavigationController: UINavigationController {
 class MoviesTests: XCTestCase {
     var navigationController = MockNavigationController()
     var filmsCoordinator: FilmsCoordinator?
-    var viewModel = FilmsViewModel()
 
     override func setUpWithError() throws {
         filmsCoordinator = FilmsCoordinator(rootController: navigationController)
