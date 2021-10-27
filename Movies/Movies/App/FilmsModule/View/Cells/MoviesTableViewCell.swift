@@ -1,5 +1,5 @@
 // MoviesTableViewCell.swift
-// Copyright © RM. All rights reserved.
+// Copyright © DmitrievSY. All rights reserved.
 
 import UIKit
 
@@ -8,27 +8,38 @@ final class MoviesTableViewCell: UITableViewCell {
 
     static let identifier = "CustomTableViewCell"
 
-    // MARK: - Public Properties
+    // MARK: - Private Properties
 
-    var filmsOverviewLabelText = ""
-    var filmsTitleLabelText = ""
-    var filmsPosterImageViewData = Data()
-    var voteLabelText = ""
-
-    // MARK: - Private Propertyes
-
+    private let staticImageAddress = "https://image.tmdb.org/t/p/w500"
     private let filmsOverviewLabel = UITextView()
     private let filmsTitleLabel = UILabel()
     private let filmsPosterImageView = UIImageView()
     private let voteLabel = UILabel()
     private let backOverviewView = UIView()
     private let backVoteLabelView = UIView()
+    private let imageService = ImageService()
 
     // MARK: - Set Selected
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         setupCellView()
+    }
+
+    // MARK: - Internal Methods
+
+    func configurateCell(films: [ResultsFilm], for indexPath: IndexPath) -> UITableViewCell {
+        filmsOverviewLabel.text = films[indexPath.row].overview
+        filmsTitleLabel.text = films[indexPath.row].title
+        voteLabel.text = String(films[indexPath.row].voteAverage)
+        let imageURLString = films[indexPath.row].posterPath ?? ""
+
+        imageService.getImage(url: imageURLString) { [weak self] image in
+            DispatchQueue.main.async {
+                self?.filmsPosterImageView.image = image
+            }
+        }
+        return self
     }
 
     // MARK: - Private Methods
@@ -60,7 +71,6 @@ final class MoviesTableViewCell: UITableViewCell {
     private func createVoteLabel() {
         voteLabel.font = UIFont.boldSystemFont(ofSize: 16)
         voteLabel.textColor = .white
-        voteLabel.text = voteLabelText
         voteLabel.adjustsFontSizeToFitWidth = true
         backVoteLabelView.addSubview(voteLabel)
     }
@@ -71,15 +81,14 @@ final class MoviesTableViewCell: UITableViewCell {
     }
 
     private func createOverviewLabelCell() {
-        filmsOverviewLabel.text = filmsOverviewLabelText
         filmsOverviewLabel.isScrollEnabled = false
         filmsOverviewLabel.font = UIFont.systemFont(ofSize: 14)
+        filmsOverviewLabel.isUserInteractionEnabled = false
         filmsOverviewLabel.backgroundColor = .white
         backOverviewView.addSubview(filmsOverviewLabel)
     }
 
     private func createTitleLabelCell() {
-        filmsTitleLabel.text = filmsTitleLabelText
         filmsTitleLabel.numberOfLines = 0
         filmsTitleLabel.textColor = .darkGray
         filmsTitleLabel.adjustsFontSizeToFitWidth = false
@@ -93,7 +102,6 @@ final class MoviesTableViewCell: UITableViewCell {
         if filmsPosterImageView.image == nil {
             filmsPosterImageView.image = UIImage(named: "poster")
         }
-        filmsPosterImageView.image = UIImage(data: filmsPosterImageViewData)
         contentView.addSubview(filmsPosterImageView)
     }
 

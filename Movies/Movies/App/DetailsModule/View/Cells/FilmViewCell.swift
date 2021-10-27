@@ -1,32 +1,43 @@
 // FilmViewCell.swift
-// Copyright © RM. All rights reserved.
+// Copyright © DmitrievSY. All rights reserved.
 
 import UIKit
 
 final class FilmViewCell: UITableViewCell {
-    // MARK: - Static Property
+    // MARK: - Static property
 
     static let identifier = "FilmTableViewCell"
 
-    // MARK: - Public Properties
-
-    var filmTitleText = ""
-    var descriptionTitleText = ""
-    var dataForImage = Data()
-
-    // MARK: Private Propertyes
+    // MARK: - Private properties
 
     private let filmTitle = UILabel()
     private let posterImageView = UIImageView()
     private let descriptionTitle = UILabel()
     private let backDescriptionView = UIView()
     private let backPostView = UIView()
+    private let imageService = ImageService()
 
     // MARK: - Set Selected
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         setupCellView()
+    }
+
+    // MARK: - Internal Method
+
+    func configureCell(filmDescription: FilmDescription) -> UITableViewCell {
+        filmTitle.text = filmDescription.title
+        descriptionTitle.text = filmDescription.overview
+
+        let imageString = filmDescription.posterPath ?? ""
+
+        imageService.getImage(url: imageString) { [weak self] image in
+            DispatchQueue.main.async {
+                self?.posterImageView.image = image
+            }
+        }
+        return self
     }
 
     // MARK: - Private Methods
@@ -51,16 +62,15 @@ final class FilmViewCell: UITableViewCell {
     }
 
     private func createFilmTitle() {
+        filmTitle.accessibilityIdentifier = "Title"
         filmTitle.textColor = .darkGray
         filmTitle.font = UIFont.boldSystemFont(ofSize: 30)
-        filmTitle.text = filmTitleText
         filmTitle.numberOfLines = 0
         filmTitle.adjustsFontSizeToFitWidth = true
         contentView.addSubview(filmTitle)
     }
 
     private func createPosterImageView() {
-        posterImageView.image = UIImage(data: dataForImage)
         backPostView.addSubview(posterImageView)
     }
 
@@ -70,7 +80,6 @@ final class FilmViewCell: UITableViewCell {
 
     private func createDescriptionTitle() {
         descriptionTitle.font = UIFont.boldSystemFont(ofSize: 20)
-        descriptionTitle.text = descriptionTitleText
         descriptionTitle.numberOfLines = 0
         backDescriptionView.addSubview(descriptionTitle)
     }
